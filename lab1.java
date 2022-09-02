@@ -2,7 +2,8 @@
 // Входные данные: текст и строка.
 // Результат работы алгоритма:
 // массив слов входного текста, которые в качестве подстроки содержат входную строку.
-// Например, если пользователь введет "рек" для строки "Ехал Грека через реку", результат будет "Грека, реку".
+// Например, если пользователь введет "рек" для строки "Ехал Грека через реку",
+// результат будет "Грека, реку".
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -42,7 +43,7 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
 
-        int menuChoice;
+        int menuChoice, numOfFoundWords = 0;
         String[] sentenceWords = new String[0];
         String phrase = "", sentence = "";
 
@@ -67,14 +68,34 @@ public class Main {
                     break;
 
                 case 3:
-                    if (!sentence.isEmpty() & !phrase.isEmpty()) {
+                    if (!(sentence.isEmpty() & phrase.isEmpty())) {
                         for (String sentenceWord : sentenceWords) {
                             if (sentenceWord.contains(phrase)) {
-
-                                System.out.println("found it! word from array:" +
-                                        sentenceWord + " phrase: " + phrase);
+                                numOfFoundWords += 1;
                             }
                         }
+
+                        String[] foundWordsArray = new String[numOfFoundWords];
+
+                        for (String sentenceWord : sentenceWords) {
+                            if (sentenceWord.contains(phrase)) {
+                                for (int j = 0; j < foundWordsArray.length; j++) {
+                                    if (foundWordsArray[j] == null) {
+                                        foundWordsArray[j] = sentenceWord;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (foundWordsArray.length > 0) {
+                            System.out.println("Найдены слова!: " +
+                                    Arrays.toString(foundWordsArray).replace("[", "").replace("]", " "));
+                        }
+                        else {
+                            System.out.println("Слова содержащие фразу '" + phrase +"' не были найдены\n");
+                        }
+
                     }
                     else {
                         System.out.println("Текст или фраза не заполнены!");
