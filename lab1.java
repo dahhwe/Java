@@ -33,8 +33,7 @@ public class Main {
                 acceptedInt = Integer.parseInt(userInput);
                 valAccepted = true;
                 return acceptedInt;
-            }
-            catch (NumberFormatException ex) {
+            } catch (NumberFormatException ex) {
                 valAccepted = false;
                 System.out.println("Некорректный ввод! Введите число:");
                 userInput = input.nextLine();
