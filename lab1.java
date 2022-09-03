@@ -25,13 +25,17 @@ public class Main {
     private static int getIntInput() {
         Scanner input = new Scanner(System.in);
         String userInput = input.nextLine();
-        boolean accepted = false;
+        boolean valAccepted = false;
+        int acceptedInt;
 
-        while (!accepted) {
+        while (!valAccepted) {
             try {
-                return Integer.parseInt(userInput);
+                acceptedInt = Integer.parseInt(userInput);
+                valAccepted = true;
+                return acceptedInt;
             }
             catch (NumberFormatException ex) {
+                valAccepted = false;
                 System.out.println("Некорректный ввод! Введите число:");
                 userInput = input.nextLine();
             }
@@ -42,8 +46,7 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);
-
-        int menuChoice, numOfFoundWords = 0;
+        int menuChoice;
         String[] sentenceWords = new String[0];
         String phrase = "", sentence = "";
 
@@ -53,21 +56,18 @@ public class Main {
             menuChoice = getIntInput();
 
             switch (menuChoice) {
-                case 1:
+                case 1 -> {
                     System.out.println("Введите Ваш текст:");
                     sentence = input.nextLine();
-
                     sentenceWords = sentence.split(" ");
                     System.out.println(Arrays.toString(sentenceWords));
-
-                    break;
-
-                case 2:
+                }
+                case 2 -> {
                     System.out.println("Введите фразу для поиска:");
                     phrase = input.nextLine();
-                    break;
-
-                case 3:
+                }
+                case 3 -> {
+                    int numOfFoundWords = 0;
                     if (!(sentence.isEmpty() & phrase.isEmpty())) {
                         for (String sentenceWord : sentenceWords) {
                             if (sentenceWord.contains(phrase)) {
@@ -90,25 +90,17 @@ public class Main {
 
                         if (foundWordsArray.length > 0) {
                             System.out.println("Найдены слова!: " +
-                                    Arrays.toString(foundWordsArray).replace("[", "").replace("]", " "));
+                                    Arrays.toString(foundWordsArray).replace("[", "").replace("]", " ") + "\n");
+                        } else {
+                            System.out.println("Слова содержащие фразу '" + phrase + "' не были найдены\n");
                         }
-                        else {
-                            System.out.println("Слова содержащие фразу '" + phrase +"' не были найдены\n");
-                        }
 
+                    } else {
+                        System.out.println("Текст или фраза не заполнены!\n");
                     }
-                    else {
-                        System.out.println("Текст или фраза не заполнены!");
-                    }
-                    break;
-
-                case 4:
-                    System.out.println("До свидания!");
-                    break;
-
-                default:
-                    System.out.println("Данного пункта нет в меню!");
-                    break;
+                }
+                case 4 -> System.out.println("До свидания!");
+                default -> System.out.println("Данного пункта нет в меню!");
             }
         } while (menuChoice != 4);
     }
