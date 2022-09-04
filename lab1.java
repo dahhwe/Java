@@ -8,7 +8,6 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
-
 public class Main {
     private static void printMenu() {
 
@@ -21,25 +20,21 @@ public class Main {
                 3. Поиск слов включающих в себя фразу
                 4. Выход \n \n""");
     }
-
+    
     private static int getIntInput() {
         Scanner input = new Scanner(System.in);
         String userInput = input.nextLine();
-        boolean valAccepted = false;
-        int acceptedInt;
+        int userInt = 0;
 
-        while (!valAccepted) {
+        do {
             try {
-                acceptedInt = Integer.parseInt(userInput);
-                valAccepted = true;
-                return acceptedInt;
+                userInt = Integer.parseInt(userInput);
             } catch (NumberFormatException ex) {
-                valAccepted = false;
                 System.out.println("Некорректный ввод! Введите число:");
                 userInput = input.nextLine();
             }
-        }
-        return 0;
+        } while (userInt == 0);
+        return userInt;
     }
 
     public static void main(String[] args) {
