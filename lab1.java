@@ -8,7 +8,14 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Main {
+/**
+ * Класс реализует поиск слов содержащих кодовую фразу в тексте.
+ */
+public class WordSearch {
+
+    /**
+     * Вывод графического меню программы.
+     */
     private static void printMenu() {
 
         System.out.print("""
@@ -20,23 +27,36 @@ public class Main {
                 3. Поиск слов включающих в себя фразу
                 4. Выход \n \n""");
     }
-    
+
+    /**
+     * Функция проверяет, является ли введеное число целочисленым
+     * и зацикливается до получения корректого числа.
+     * @return userInt, целое число
+     */
     private static int getIntInput() {
         Scanner input = new Scanner(System.in);
         String userInput = input.nextLine();
         int userInt = 0;
+        boolean allowedInput = false;
 
         do {
             try {
                 userInt = Integer.parseInt(userInput);
+                allowedInput = true;
             } catch (NumberFormatException ex) {
                 System.out.println("Некорректный ввод! Введите число:");
                 userInput = input.nextLine();
             }
-        } while (userInt == 0);
+        } while (!allowedInput);
         return userInt;
     }
 
+    /**
+     * Главная функция программы с возможностью вывода информации и
+     * реализацией алгоритма.
+     * @param args массив последовательностей символов (строк),
+     *            которые передаются в «основную» функцию
+     */
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);
@@ -54,7 +74,6 @@ public class Main {
                     System.out.println("Введите Ваш текст:");
                     sentence = input.nextLine();
                     sentenceWords = sentence.split(" ");
-                    System.out.println(Arrays.toString(sentenceWords));
                 }
                 case 2 -> {
                     System.out.println("Введите фразу для поиска:");
@@ -62,7 +81,7 @@ public class Main {
                 }
                 case 3 -> {
                     int numOfFoundWords = 0;
-                    if (!(sentence.isEmpty() & phrase.isEmpty())) {
+                    if (!(sentence.isEmpty() | phrase.isEmpty())) {
                         for (String sentenceWord : sentenceWords) {
                             if (sentenceWord.contains(phrase)) {
                                 numOfFoundWords += 1;
