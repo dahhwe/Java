@@ -34,6 +34,7 @@ public class WordSearch {
      * @return userInt, целое число
      */
     private static int getIntInput() {
+
         Scanner input = new Scanner(System.in);
         String userInput = input.nextLine();
         int userInt = 0;
@@ -52,15 +53,80 @@ public class WordSearch {
     }
 
     /**
+     * Получение пользовательской строки
+     * @return пользовательская строка
+     */
+    private static String getUserText() {
+
+        Scanner input = new Scanner(System.in);
+        System.out.println("Введите Ваш текст:");
+
+        return input.nextLine();
+    }
+
+    /**
+     * Поиск количества слов содержащиъ кодовую фразу
+     * @param sentenceWords слова в предложении
+     * @param phrase кодовая фраза
+     * @return число слов содержащиъ кодовую фразу
+     */
+    private static int getNumOfFoundWords(String[] sentenceWords, String phrase) {
+        int numOfFoundWords = 0;
+        for (String sentenceWord : sentenceWords) {
+            if (sentenceWord.contains(phrase)) {
+                numOfFoundWords += 1;
+            }
+        }
+        return numOfFoundWords;
+    }
+
+    /**
+     * Создание массива содержащего слова с кодовой фразой
+     * @param numOfFoundWords Число слов с кодовой фразой
+     * @param sentenceWords Все слова в предложении
+     * @param phrase Кодовая фраза
+     * @return массив содержащий слова с кодовой фразой
+     */
+    private static String[] createWordsArray(int numOfFoundWords, String[] sentenceWords, String phrase) {
+        String[] foundWordsArray = new String[numOfFoundWords];
+
+        for (String sentenceWord : sentenceWords) {
+            if (sentenceWord.contains(phrase)) {
+                for (int j = 0; j < foundWordsArray.length; j++) {
+                    if (foundWordsArray[j] == null) {
+                        foundWordsArray[j] = sentenceWord;
+                        break;
+                    }
+                }
+            }
+        }
+        return foundWordsArray;
+    }
+
+    /**
+     * Вывод массива содержащего слова с кодовой фразой
+     * @param foundWordsArray массив содержащий слова с кодовой фразой
+     * @param phrase Кодовая фраза
+     */
+    private static void printFoundWordsArray(String[] foundWordsArray, String phrase) {
+        if (foundWordsArray.length > 0) {
+            System.out.println("Найдены слова!: " +
+                    Arrays.toString(foundWordsArray).replace("[", "").replace("]", " ") + "\n");
+        } else {
+            System.out.println("Слова содержащие фразу '" + phrase + "' не были найдены\n");
+        }
+    }
+
+    /**
      * Главная функция программы с возможностью вывода информации и
      * реализацией алгоритма.
      * @param args массив последовательностей символов (строк),
-     *            которые передаются в «основную» функцию
+     *            которые передаются в функцию main.
      */
     public static void main(String[] args) {
 
         Scanner input = new Scanner(System.in);
-        int menuChoice;
+        int menuChoice, numOfFoundWords;
         String[] sentenceWords = new String[0];
         String phrase = "", sentence = "";
 
@@ -71,8 +137,7 @@ public class WordSearch {
 
             switch (menuChoice) {
                 case 1 -> {
-                    System.out.println("Введите Ваш текст:");
-                    sentence = input.nextLine();
+                    sentence = getUserText();
                     sentenceWords = sentence.split(" ");
                 }
                 case 2 -> {
@@ -80,34 +145,11 @@ public class WordSearch {
                     phrase = input.nextLine();
                 }
                 case 3 -> {
-                    int numOfFoundWords = 0;
                     if (!(sentence.isEmpty() | phrase.isEmpty())) {
-                        for (String sentenceWord : sentenceWords) {
-                            if (sentenceWord.contains(phrase)) {
-                                numOfFoundWords += 1;
-                            }
-                        }
+                        numOfFoundWords = getNumOfFoundWords(sentenceWords, phrase);
+                        String[] foundWordsArray = createWordsArray(numOfFoundWords, sentenceWords, phrase);
 
-                        String[] foundWordsArray = new String[numOfFoundWords];
-
-                        for (String sentenceWord : sentenceWords) {
-                            if (sentenceWord.contains(phrase)) {
-                                for (int j = 0; j < foundWordsArray.length; j++) {
-                                    if (foundWordsArray[j] == null) {
-                                        foundWordsArray[j] = sentenceWord;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-
-                        if (foundWordsArray.length > 0) {
-                            System.out.println("Найдены слова!: " +
-                                    Arrays.toString(foundWordsArray).replace("[", "").replace("]", " ") + "\n");
-                        } else {
-                            System.out.println("Слова содержащие фразу '" + phrase + "' не были найдены\n");
-                        }
-
+                        printFoundWordsArray(foundWordsArray, phrase);
                     } else {
                         System.out.println("Текст или фраза не заполнены!\n");
                     }
