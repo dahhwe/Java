@@ -11,11 +11,12 @@ public class Furniture {
         name = "NoName";
         color = "NoColor";
     }
+
     Furniture(Integer newLength, Double newPrice, String newName, String newColor) {
-            length = newLength;
-            price = newPrice;
-            name = newName;
-            color = newColor;
+        length = newLength;
+        price = newPrice;
+        name = newName;
+        color = newColor;
     }
 
     public Integer getLength() {
@@ -46,6 +47,9 @@ public class Furniture {
         return color;
     }
 
+    public void setColor(String color) {
+        this.color = color;
+    }
 
     private static String getShippingInfo() {
         return "shipping";
