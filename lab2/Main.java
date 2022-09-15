@@ -1,8 +1,17 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+// Вариант 8
+// Необходимо реализовать класс согласно
+// варианту. Необходимо придумать поля для вашего варианта: числовые (целое и
+// вещественное, не менее двух) и текстовые (не менее двух). Все поля класса
+// должны быть закрытыми, необходимо реализовать методы доступа. В классе
+// должны быть реализованы конструктор по-умолчанию и с параметрами.
+
+import java.util.*;
 
 public class Main {
 
+    /**
+     * Основное меню программы.
+     */
     private static void printMenu() {
 
         System.out.print("""
@@ -19,7 +28,11 @@ public class Main {
                 8 — Выход \n \n""");
     }
 
+    /**
+     * Меню программы изменения полей объекта.
+     */
     private static void printEditMenu() {
+
         System.out.print("""
                 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
                 ┃        Изменение параметров        ┃
@@ -31,7 +44,11 @@ public class Main {
                 5 — Отмена \n \n""");
     }
 
+    /**
+     * Меню сортировки по полям объекта.
+     */
     private static void printSortMenu() {
+
         System.out.print("""
                 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
                 ┃         Сортировка мебели          ┃
@@ -43,7 +60,12 @@ public class Main {
                 5 — Отмена \n \n""");
     }
 
+    /**
+     * Функция для получения чело численного числа ввода.
+     * @return Целое число.
+     */
     private static int getIntInput() {
+
         Scanner input = new Scanner(System.in);
         String userInput = input.nextLine();
         int userInt = 0;
@@ -61,7 +83,12 @@ public class Main {
         return userInt;
     }
 
+    /**
+     * Функция для получения строки от ввода пользователя.
+     * @return Введенная строка.
+     */
     private static String getStringInput() {
+
         Scanner input = new Scanner(System.in);
         String userInput = input.nextLine();
 
@@ -74,9 +101,9 @@ public class Main {
     }
 
     /**
-     * Функция проверяет, является ли введенное число целочисленным
+     * Функция проверяет, является ли введенное число двойной точности
      * и зацикливается до получения корректного числа.
-     * @return userInt, целое число
+     * @return userDouble, число двойной точности.
      */
     private static double getDoubleInput() {
 
@@ -97,7 +124,12 @@ public class Main {
         return userDouble;
     }
 
+    /**
+     * Вывод всех объектов из списка.
+     * @param furnitureStack Список объектов.
+     */
     private static void printAllFurniture(ArrayList<Furniture> furnitureStack) {
+
         int count = 1;
         if (furnitureStack.isEmpty()) {
             System.out.println("Мебели нет!");
@@ -111,6 +143,10 @@ public class Main {
         }
     }
 
+    /**
+     * Добавление объекта с данными, заполненными пользователем.
+     * @return Объект с данными, заполненными пользователем.
+     */
     private static Furniture getNewFurnDetails() {
 
         System.out.println("Введите имя мебели:");
@@ -121,6 +157,7 @@ public class Main {
 
         System.out.println("Введите длину мебели в сантиметрах:");
         int furnitureLength = getIntInput();
+
         while (furnitureLength < 1) {
             System.out.println("Цена должна быть больше 0! Введите новую длину: ");
             furnitureLength = getIntInput();
@@ -129,13 +166,17 @@ public class Main {
         System.out.println("Введите (double)цену мебели:");
         double furniturePrice = getDoubleInput();
 
-
         return new Furniture(furnitureName, furnitureColor,furnitureLength, furniturePrice);
     }
 
+    /**
+     * Изменение данных объекта.
+     * @param furnitureToEdit Объект для изменения.
+     * @param editOperation Поле для изменения.
+     */
     private static void editFurnVar(Furniture furnitureToEdit, int editOperation) {
-        Scanner input = new Scanner(System.in);
 
+        Scanner input = new Scanner(System.in);
         switch (editOperation) {
             case 1 -> {
                 System.out.println("Введите новое имя:");
@@ -151,7 +192,7 @@ public class Main {
                 System.out.println("Введите новый цвет:");
                 String newColor = input.nextLine();
                 while (newColor.isEmpty()) {
-                    System.out.println("Имя не может быть пустым! Введите новое имя:");
+                    System.out.println("Цвет не может быть пустым! Введите новое имя:");
                     newColor = input.nextLine();
                 }
                 furnitureToEdit.setColor(newColor);
@@ -182,20 +223,41 @@ public class Main {
         }
     }
 
-    private static ArrayList<Furniture> sortAllFurniture(ArrayList<Furniture> furnitureStack) {
+    /**
+     * Сортировка объектов по полям.
+     * @param FurnitureStack Список с объектами.
+     */
+    private static void sortAllFurniture(ArrayList<Furniture> FurnitureStack) {
+
+
+        Comparator<Furniture> nameComparator = Comparator.comparing(Furniture::getName);
+        Comparator<Furniture> colorComparator = Comparator.comparing(Furniture::getColor);
+        Comparator<Furniture> lengthComparator = Comparator.comparing(Furniture::getLength);
+        Comparator<Furniture> priceComparator = Comparator.comparing(Furniture::getPrice);
+
         printSortMenu();
 
         System.out.println("Выберите по какому полю сортировать мебель:");
         int numToEdit = getIntInput();
 
         switch (numToEdit) {
-            case 1 -> {
-                }
+            case 1 -> FurnitureStack.sort(nameComparator);
+                case 2 -> FurnitureStack.sort(colorComparator);
+                case 3 -> FurnitureStack.sort(lengthComparator);
+                case 4 -> FurnitureStack.sort(priceComparator);
             default -> System.out.println("Данного пункта нет в меню!");
         }
-        return furnitureStack;
+        System.out.println("Мебель отсортирована!");
+        printAllFurniture(FurnitureStack);
+
     }
 
+    /**
+     * Главная функция программы с возможностью вывода информации и
+     * реализацией алгоритма.
+     * @param args массив последовательностей символов (строк),
+     *            которые передаются в функцию main.
+     */
     public static void main(String[] args) {
 
         ArrayList<Furniture> furnitureStack = new ArrayList<>();
@@ -255,6 +317,7 @@ public class Main {
 
                 }
                 case 5 -> {
+                    printAllFurniture(furnitureStack);
                     if (!furnitureStack.isEmpty()) {
                         int count = 1;
                         for(Furniture i: furnitureStack) {
@@ -271,14 +334,13 @@ public class Main {
                 case 6 -> {
                     printAllFurniture(furnitureStack);
                     if (!furnitureStack.isEmpty()) {
-                            furnitureStack = sortAllFurniture(furnitureStack);
-                        }
+                        sortAllFurniture(furnitureStack);
+                    }
                 }
                 case 7 -> printAllFurniture(furnitureStack);
                 case 8 -> System.out.println("До свидания!");
                 default -> System.out.println("Данного пункта нет в меню!");
             }
         } while (menuChoice != 8);
-
     }
 }
