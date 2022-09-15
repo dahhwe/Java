@@ -1,22 +1,27 @@
 
-public class Furniture {
-
+public class Furniture implements Comparable<Furniture>{
     private Integer length;
-    public Double price;
 
-    public String name;
-    public String color;
+    private Double price;
+
+    private String name;
+    private String color;
 
     Furniture() {
         name = "NoName";
         color = "NoColor";
     }
 
-    Furniture(Integer newLength, Double newPrice, String newName, String newColor) {
+    Furniture(String newName, String newColor, Integer newLength, Double newPrice) {
         length = newLength;
         price = newPrice;
         name = newName;
         color = newColor;
+    }
+
+    @Override
+    public int compareTo(Furniture o) {
+        return this.length - o.length;
     }
 
     public Integer getLength() {
@@ -51,7 +56,19 @@ public class Furniture {
         this.color = color;
     }
 
-    private static String getShippingInfo() {
-        return "shipping";
+    public String getShippingInfo()
+    {
+        if (this.length > 50) {
+            return "Premium shipping";
+        }
+        else if (this.length > 20) {
+            return "Medium shipping";
+        }
+        else if (this.length > 5) {
+            return "Small shipping";
+        }
+        else {
+            return "Length is not set";
+        }
     }
 }
