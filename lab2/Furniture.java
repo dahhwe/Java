@@ -2,9 +2,21 @@
  * Класс содержащий информацию о мебельных объектах.
  */
 public class Furniture{
+    /**
+     * Название мебели.
+     */
     private String name;
+    /**
+     * Цвет мебели.
+     */
     private String color;
+    /**
+     * Длина мебели.
+     */
     private Integer length;
+    /**
+     * Цена мебели.
+     */
     private Double price;
 
     /**
@@ -19,37 +31,36 @@ public class Furniture{
 
     /**
      * Конструктор с параметрами.
-     * @param newName Имя мебели.
-     * @param newColor Цвет мебели.
-     * @param newLength Длина мебели.
-     * @param newPrice Цена мебели.
+     * @param name Имя мебели.
+     * @param color Цвет мебели.
+     * @param length Длина мебели.
+     * @param price Цена мебели.
      */
-    Furniture(String newName, String newColor, Integer newLength, Double newPrice) {
-        name = newName;
-        color = newColor;
-        length = newLength;
-        price = newPrice;
+    Furniture(String name, String color, Integer length, Double price) {
+        this.name = name;
+        this.color = color;
+        this.length = length;
+        this.price = price;
     }
 
     /**
-     * Функция возвращает длину объекта.
+     * Возвращает длину объекта.
      * @return Длина объекта.
      */
     public Integer getLength() {
         return length;
     }
 
-
     /**
-     * Функция устанавливает длину объекта.
+     * Устанавливает длину объекта.
      * @param length Длина объекта.
      */
     public void setLength(Integer length) {
-        this.length = length;
+        if (length > 0) this.length = length;
     }
 
     /**
-     * Функция возвращает цену объекта.
+     * Возвращает цену объекта.
      * @return Цена объекта.
      */
     public Double getPrice() {
@@ -57,15 +68,15 @@ public class Furniture{
     }
 
     /**
-     * Функция устанавливает цену объекта.
+     * Устанавливает цену объекта.
      * @param price Цена объекта.
      */
     public void setPrice(Double price) {
-        this.price = price;
+        if (price > 0) this.price = price;
     }
 
     /**
-     * Функция возвращает имя объекта.
+     * Возвращает имя объекта.
      * @return Имя объекта.
      */
     public String getName() {
@@ -73,15 +84,15 @@ public class Furniture{
     }
 
     /**
-     * Функция устанавливает имя объекта.
+     * Устанавливает имя объекта.
      * @param name Имя объекта.
      */
     public void setName(String name) {
-        this.name = name;
+        if (!name.isEmpty()) this.name = name;
     }
 
     /**
-     * Функция возвращает цвет объекта.
+     * Возвращает цвет объекта.
      * @return цвет объекта.
      */
     public String getColor() {
@@ -89,30 +100,48 @@ public class Furniture{
     }
 
     /**
-     * Функция устанавливает цвет объекта.
+     * Устанавливает цвет объекта.
      * @param color Цвет объекта.
      */
     public void setColor(String color) {
-        this.color = color;
+        if (!color.isEmpty()) this.color = color;
     }
 
+
     /**
-     * Функция возвращает предпочтенный метод доставки.
+     * Возвращает предпочтенный метод доставки.
      * @return Предпочтенный метод доставки
      */
     public String getShippingInfo()
     {
-        if (this.length > 50) {
+        int bigLength = 50;
+        int midLength = 20;
+        int smallLength = 5;
+
+        if (this.length > bigLength) {
             return "Премиум доставка";
         }
-        else if (this.length > 20) {
+        else if (this.length > midLength) {
             return "Средняя доставка";
         }
-        else if (this.length > 5) {
+        else if (this.length >= smallLength) {
             return "Маленькая доставка";
         }
         else {
             return "Параметры не заданы";
         }
+    }
+
+    /**
+     * Вывод информации об объекте.
+     * @return Информация объекта.
+     */
+    @Override
+    public String toString() {
+        return  " | Имя - '" + name + '\'' +
+                "| Цвет - '" + color + '\'' +
+                "| Длина - " + length +
+                "| Цена - " + price +
+                " ₽";
     }
 }
