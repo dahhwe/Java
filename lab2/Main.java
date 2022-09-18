@@ -32,7 +32,7 @@ public class Main {
     }
 
     /**
-     * Меню программы изменения полей объекта.
+     * Меню изменения полей объекта.
      */
     private static void printEditMenu() {
 
@@ -48,7 +48,7 @@ public class Main {
     }
 
     /**
-     * Меню сортировки по полям объекта.
+     * Меню сортировки объектов по полям.
      */
     private static void printSortMenu() {
 
@@ -64,7 +64,7 @@ public class Main {
     }
 
     /**
-     * Функция для получения чело численного числа ввода.
+     * Функция для получения целочисленного ввода.
      * @return Целое число.
      */
     private static int getIntInput() {
@@ -171,7 +171,6 @@ public class Main {
             System.out.println("Цена должна быть больше 0! Введите новую цену:");
             furniturePrice = getDoubleInput();
         }
-
         return new Furniture(furnitureName, furnitureColor,furnitureLength, furniturePrice);
     }
 
@@ -217,7 +216,7 @@ public class Main {
     }
 
     /**
-     * Функция проверяет новую цену на корректный ввод.
+     * Функция проверяет введенную новую цену на корректный ввод.
      * @return Новая цена.
      */
     private static double getNewPrice() {
@@ -231,7 +230,7 @@ public class Main {
     }
 
     /**
-     * Функция проверяет новую длину на корректный ввод.
+     * Функция проверяет введенную новую длину на корректный ввод.
      * @return Новая длина.
      */
     private static int getNewLength() {
@@ -258,17 +257,20 @@ public class Main {
             switch (numToEdit) {
                 case 1 -> {
                     Comparator<Furniture> nameComparator = Comparator.comparing(Furniture::getName);
-                    furnitureStack.sort(nameComparator);}
+                    furnitureStack.sort(nameComparator);
+                }
                 case 2 -> {
                     Comparator<Furniture> colorComparator = Comparator.comparing(Furniture::getColor);
                     furnitureStack.sort(colorComparator);
                 }
                 case 3 -> {
                     Comparator<Furniture> lengthComparator = Comparator.comparing(Furniture::getLength);
-                    furnitureStack.sort(lengthComparator);}
+                    furnitureStack.sort(lengthComparator);
+                }
                 case 4 -> {
                     Comparator<Furniture> priceComparator = Comparator.comparing(Furniture::getPrice);
-                    furnitureStack.sort(priceComparator);}
+                    furnitureStack.sort(priceComparator);
+                }
                 default -> System.out.println("Данного пункта нет в меню!");
             }
             System.out.println("Мебель отсортирована!");
@@ -281,6 +283,7 @@ public class Main {
      * @param furnitureStack Список с объектами.
      */
     private static void editFurniture(ArrayList<Furniture> furnitureStack) {
+
         printAllFurniture(furnitureStack);
 
         if (!furnitureStack.isEmpty()) {
@@ -300,10 +303,11 @@ public class Main {
     }
 
     /**
-     * Функция удаляет объекты.
+     * Функция удаляет объект по выбору пользователя.
      * @param furnitureStack Список с объектами.
      */
     private static void deleteFurniture(ArrayList<Furniture> furnitureStack) {
+
         printAllFurniture(furnitureStack);
 
         if (!furnitureStack.isEmpty()) {
@@ -322,10 +326,11 @@ public class Main {
     }
 
     /**
-     * Функция получает информацию о доставках объектах.
+     * Функция получает информацию о доставках объектов.
      * @param furnitureStack Список с объектами.
      */
     private static void getDeliveryDet(ArrayList<Furniture> furnitureStack) {
+
         if (!furnitureStack.isEmpty()) {
             int count = 1;
             for(Furniture i: furnitureStack) {

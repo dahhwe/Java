@@ -1,7 +1,8 @@
 /**
  * Класс содержащий информацию о мебельных объектах.
  */
-public class Furniture{
+public class Furniture {
+
     /**
      * Название мебели.
      */
@@ -47,70 +48,53 @@ public class Furniture{
      * Возвращает длину объекта.
      * @return Длина объекта.
      */
-    public Integer getLength() {
-        return length;
-    }
+    public Integer getLength() { return length; }
 
     /**
      * Устанавливает длину объекта.
      * @param length Длина объекта.
      */
-    public void setLength(Integer length) {
-        if (length > 0) this.length = length;
-    }
+    public void setLength(Integer length) { if (length > 0) this.length = length; }
 
     /**
      * Возвращает цену объекта.
      * @return Цена объекта.
      */
-    public Double getPrice() {
-        return price;
-    }
+    public Double getPrice() { return price; }
 
     /**
      * Устанавливает цену объекта.
      * @param price Цена объекта.
      */
-    public void setPrice(Double price) {
-        if (price > 0) this.price = price;
-    }
+    public void setPrice(Double price) { if (price > 0) this.price = price; }
 
     /**
      * Возвращает имя объекта.
      * @return Имя объекта.
      */
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     /**
      * Устанавливает имя объекта.
      * @param name Имя объекта.
      */
-    public void setName(String name) {
-        if (!name.isEmpty()) this.name = name;
-    }
+    public void setName(String name) { if (!name.isEmpty()) this.name = name; }
 
     /**
      * Возвращает цвет объекта.
      * @return цвет объекта.
      */
-    public String getColor() {
-        return color;
-    }
+    public String getColor() { return color; }
 
     /**
      * Устанавливает цвет объекта.
      * @param color Цвет объекта.
      */
-    public void setColor(String color) {
-        if (!color.isEmpty()) this.color = color;
-    }
-
+    public void setColor(String color) { if (!color.isEmpty()) this.color = color; }
 
     /**
      * Возвращает предпочтенный метод доставки.
-     * @return Предпочтенный метод доставки
+     * @return Предпочтенный метод доставки.
      */
     public String getShippingInfo()
     {
