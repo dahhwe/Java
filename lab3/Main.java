@@ -60,6 +60,7 @@ public class Main {
 
     /**
      * Функция для получения целочисленного ввода.
+     *
      * @return Целое число.
      */
     private static int getIntInput() {
@@ -83,6 +84,7 @@ public class Main {
 
     /**
      * Функция для получения строки от ввода пользователя.
+     *
      * @return Введенная строка.
      */
     private static String getStringInput() {
@@ -100,6 +102,7 @@ public class Main {
     /**
      * Функция проверяет, является ли введенное число двойной точности
      * и зацикливается до получения корректного числа.
+     *
      * @return userDouble, число двойной точности.
      */
     private static double getDoubleInput() {
@@ -123,6 +126,7 @@ public class Main {
 
     /**
      * Функция предоставляет пользователю выбор добавить двигатель с параметрами или без.
+     *
      * @param engineStack Массив с двигателями.
      */
     private static void enginesConfig(ArrayList<Engine> engineStack) {
@@ -138,6 +142,7 @@ public class Main {
 
     /**
      * Функция предоставляет выбор добавить двигатель с выбранной пользователем конфигурацией.
+     *
      * @param engineStack Массив с двигателями.
      */
     private static void getNewClearEngine(ArrayList<Engine> engineStack) {
@@ -155,6 +160,7 @@ public class Main {
 
     /**
      * Создание обычного двигателя без параметров.
+     *
      * @return обычный двигатель без параметров
      */
     private static Engine createNewClearBasicEngine() {
@@ -163,6 +169,7 @@ public class Main {
 
     /**
      * Создание двигателя внутреннего сгорания без параметров.
+     *
      * @return двигатель внутреннего сгорания без параметров.
      */
     private static Engine createNewClearIntCombustionEngine() {
@@ -171,6 +178,7 @@ public class Main {
 
     /**
      * Создание дизельного двигателя внутреннего сгорания без параметров.
+     *
      * @return дизельный двигатель внутреннего сгорания без параметров.
      */
     private static Engine createNewClearDieselEngine() {
@@ -179,6 +187,7 @@ public class Main {
 
     /**
      * Создание реактивного двигателя внутреннего сгорания без параметров.
+     *
      * @return реактивный двигатель внутреннего сгорания без параметров.
      */
     private static Engine createNewClearJetEngine() {
@@ -188,6 +197,7 @@ public class Main {
     /**
      * Функция предоставляет пользователю выбор двигателя, который после создания
      * будет добавлен массив с остальными двигателями.
+     *
      * @param engineStack Массив с двигателями.
      */
     private static void getNewEngineDetails(ArrayList<Engine> engineStack) {
@@ -205,6 +215,7 @@ public class Main {
 
     /**
      * Функция удаляет объект двигателя из массива по индексу.
+     *
      * @param engineStack Массив с двигателями.
      */
     private static void deleteEngine(ArrayList<Engine> engineStack) {
@@ -212,21 +223,16 @@ public class Main {
 
         if (!engineStack.isEmpty()) {
             System.out.println("Введите номер двигателя для удаления");
-            int numToDelete = getIntInput();
-
-            if (numToDelete < 1 || numToDelete > engineStack.size()) {
-                System.out.println("Выберите корректный номер двигателя для удаления! (от 1 до " +
-                        engineStack.size() + ")");
-            } else {
-                engineStack.remove(numToDelete - 1);
-                System.out.println("Двигатель #" + numToDelete + " удален!");
-            }
+            int numToDelete = getValidIndex(engineStack);
+            engineStack.remove(numToDelete - 1);
+            System.out.println("Двигатель #" + numToDelete + " удален!");
         }
     }
 
     /**
      * Функция выводит все информацию о всех двигателях в массиве.
-     * @param engineStack Массив двигателей.
+     *
+     * @param engineStack Массив с двигателями.
      */
     private static void printAllEngines(ArrayList<Engine> engineStack) {
         int count = 1;
@@ -242,6 +248,7 @@ public class Main {
 
     /**
      * Функция создает новый обычный двигатель.
+     *
      * @return Созданный обычный двигатель.
      */
     private static Engine createNewBasicEngine() {
@@ -256,6 +263,7 @@ public class Main {
 
     /**
      * Функция создает новый двигатель внутреннего сгорание.
+     *
      * @return Созданный двигатель внутреннего сгорание.
      */
     private static Engine createNewIntCombustionEngine() {
@@ -279,6 +287,7 @@ public class Main {
 
     /**
      * Функция создает новый дизельный двигатель.
+     *
      * @return Созданный дизельный двигатель.
      */
     private static Engine createNewDieselEngine() {
@@ -300,6 +309,7 @@ public class Main {
 
     /**
      * Функция создает новый реактивный двигатель.
+     *
      * @return Созданный реактивный двигатель.
      */
     private static Engine createNewJetEngine() {
@@ -315,7 +325,7 @@ public class Main {
         System.out.println("Введите энергоэффективность двигателя:");
         double energyEfficiency = getDoubleInput();
 
-        System.out.println("Введите тяговооружённость:");
+        System.out.println("Введите тяговооружённость двигателя:");
         double thrustToWeightRatio = getDoubleInput();
 
         System.out.println("Введите максимальную скорость самолета с данным двигателем:");
@@ -325,8 +335,55 @@ public class Main {
     }
 
     /**
+     * Функция получает корректный ввод индекса элемента массива от пользователя.
+     *
+     * @param engineStack Массив
+     * @return Индекс элемента массива.
+     */
+    private static int getValidIndex(ArrayList<Engine> engineStack) {
+        int index = getIntInput();
+        while (index < 1 || index > engineStack.size()) {
+            System.out.println("Введите корректный индекс! (от 1 до " +
+                    engineStack.size() + "):");
+            index = getIntInput();
+        }
+        return index;
+    }
+
+    /**
+     * Функция проверяет два объекта на равенство по индексам.
+     *
+     * @param engineStack Массив двигателей
+     */
+    private static void compareEngines(ArrayList<Engine> engineStack) {
+        printAllEngines(engineStack);
+
+        System.out.println("Введите номер первого двигателя для сравнения:");
+        int firstEngineIndex = getValidIndex(engineStack) - 1;
+
+        System.out.println("Введите номер второго двигателя для сравнения:");
+        int secondEngineIndex = getValidIndex(engineStack) - 1;
+
+        if (!(secondEngineIndex == firstEngineIndex)) {
+            if (engineStack.get(firstEngineIndex).hashCode() == engineStack.get(secondEngineIndex).hashCode()) {
+                System.out.println("хэш-коды двух объектов равны!");
+                if (engineStack.get(firstEngineIndex).equals(engineStack.get(secondEngineIndex))) {
+                    System.out.println("Объекты равны, так как хэш-коды и операция равенства двух объектов равны");
+                } else {
+                    System.out.println("Объекты не равны, так как операция равенства двух объектов не равна");
+                }
+            } else {
+                System.out.println("Объекты не равны, так как хэш-коды двух объектов не равны");
+            }
+        } else {
+            System.out.println("Нельзя сравнивать одинаковые индексы!");
+        }
+    }
+
+    /**
      * Главная функция программы с возможностью вывода информации и
      * реализацией алгоритма.
+     *
      * @param args массив последовательностей символов (строк),
      *             которые передаются в функцию main.
      */
@@ -344,7 +401,7 @@ public class Main {
                 case 1 -> enginesConfig(engineStack);
                 case 2 -> deleteEngine(engineStack);
                 case 3 -> printAllEngines(engineStack);
-                case 4 -> System.out.println("work in progress");
+                case 4 -> compareEngines(engineStack);
                 case 5 -> System.out.println("До свидания!");
                 default -> System.out.println("Данного пункта нет в меню!");
             }
