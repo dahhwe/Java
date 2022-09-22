@@ -29,10 +29,11 @@ public class internalCombustionEngine extends Engine {
 
     /**
      * Конструктор с параметрами.
-     * @param engineName Название двигателя.
-     * @param power Мощность двигателя.
-     * @param fieldOfUse Область использования.
-     * @param fuelType Детонационная стойкость бензина.
+     *
+     * @param engineName            Название двигателя.
+     * @param power                 Мощность двигателя.
+     * @param fieldOfUse            Область использования.
+     * @param fuelType              Детонационная стойкость бензина.
      * @param fuelConsumptionHourly Часовой расход топлива.
      */
     public internalCombustionEngine(String engineName, Double power,
@@ -46,6 +47,7 @@ public class internalCombustionEngine extends Engine {
 
     /**
      * Сравнение объектов
+     *
      * @param o объект для сравнения.
      * @return результат сравнения объектов.
      */
@@ -61,6 +63,7 @@ public class internalCombustionEngine extends Engine {
 
     /**
      * Возвращает числовое значение фиксированной длины для любого объекта.
+     *
      * @return Числовое значение фиксированной длины для любого объекта.
      */
     @Override
@@ -70,12 +73,13 @@ public class internalCombustionEngine extends Engine {
 
     /**
      * Вывод информации об объекте.
+     *
      * @return Информация объекта.
      */
     @Override
     public String toString() {
         return " | Название — " + getEngineName() + " | Мощность — " + getPower() + " л.с." +
                 " | Область использования — " + fieldOfUse + " | Детонационная стойкость бензина — " + fuelType +
-                " | часовой расход топлива — " + fuelConsumptionHourly;
+                " | часовой расход топлива — " + fuelConsumptionHourly + " л/ч";
     }
 }

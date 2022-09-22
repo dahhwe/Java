@@ -32,12 +32,13 @@ public class jetEngine extends Engine {
 
     /**
      * Конструктор с параметрами.
-     * @param engineName Название двигателя.
-     * @param power Мощность двигателя.
-     * @param jetsUse На каких самолетах устанавливается данный двигатель.
-     * @param energyEfficiency Энергоэффективность двигателя.
+     *
+     * @param engineName          Название двигателя.
+     * @param power               Мощность двигателя.
+     * @param jetsUse             На каких самолетах устанавливается данный двигатель.
+     * @param energyEfficiency    Энергоэффективность двигателя.
      * @param thrustToWeightRatio Тяговооружённость.
-     * @param maxSpeed Максимальная скорость самолета с данным двигателем.
+     * @param maxSpeed            Максимальная скорость самолета с данным двигателем.
      */
     public jetEngine(String engineName, Double power, String jetsUse, Double energyEfficiency,
                      Double thrustToWeightRatio, Integer maxSpeed) {
@@ -62,6 +63,7 @@ public class jetEngine extends Engine {
 
     /**
      * Возвращает числовое значение фиксированной длины для любого объекта.
+     *
      * @return Числовое значение фиксированной длины для любого объекта.
      */
     @Override
@@ -71,14 +73,15 @@ public class jetEngine extends Engine {
 
     /**
      * Вывод информации об объекте.
+     *
      * @return Информация объекта.
      */
     @Override
     public String toString() {
         return " | Название — " + getEngineName() + " | Мощность — " + getPower() + " л.с." +
                 " | Установлен на — " + jetsUse + " | Энергоэффективность — " + energyEfficiency +
-                " | Тяговооружённость — " + thrustToWeightRatio +
-                " | Макс. скорость самолета — " + maxSpeed;
+                " % | Тяговооружённость — " + thrustToWeightRatio +
+                " вт/кг | Макс. скорость самолета — " + maxSpeed + "км/ч";
     }
 }
 

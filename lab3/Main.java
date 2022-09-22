@@ -9,7 +9,7 @@
 import java.util.*;
 
 /**
- * Класс Main используется для управления объектами мебели.
+ * Класс Main используется для управления объектами двигателей.
  */
 public class Main {
 
@@ -49,6 +49,7 @@ public class Main {
      * Меню параметров.
      */
     private static void printConfigMenu() {
+
         System.out.print("""
                 ╭────────────────────────────────────╮
                 │          Меню параметров           │
@@ -100,12 +101,38 @@ public class Main {
     }
 
     /**
-     * Функция проверяет, является ли введенное число двойной точности
-     * и зацикливается до получения корректного числа.
+     * Функция для получения целочисленного ввода в заданном диапазоне от пользователя.
      *
-     * @return userDouble, число двойной точности.
+     * @param lowerLimit Нижний предел.
+     * @param upperLimit Верхний предел.
+     * @return Целочисленное число в заданном диапазоне.
      */
-    private static double getDoubleInput() {
+    public static int getIntInputWithParams(int lowerLimit, int upperLimit) {
+
+        Scanner input = new Scanner(System.in);
+        String userInput = input.nextLine();
+        int userInt = 0;
+        boolean allowedInput = false;
+
+        do {
+            try {
+                userInt = Integer.parseInt(userInput);
+                if (userInt < lowerLimit || userInt > upperLimit) {
+                    System.out.print("Число не в заданном диапазоне! введите число " +
+                            "(от " + lowerLimit + " до " + upperLimit + " )");
+                    userInput = input.nextLine();
+                } else {
+                    allowedInput = true;
+                }
+            } catch (NumberFormatException ex) {
+                System.out.print("┃ Неверный ввод. Введите число: ");
+                userInput = input.nextLine();
+            }
+        } while (!allowedInput);
+        return userInt;
+    }
+
+    private static double getDoubleInputWithParams(double lowerLimit, double upperLimit) {
 
         Scanner input = new Scanner(System.in);
         String userInput = input.nextLine();
@@ -115,9 +142,15 @@ public class Main {
         do {
             try {
                 userDouble = Double.parseDouble(userInput);
-                allowedInput = true;
+                if (userDouble < lowerLimit || userDouble > upperLimit) {
+                    System.out.print("Число не в заданном диапазоне! введите число " +
+                            "(от " + lowerLimit + " до " + upperLimit + ")");
+                    userInput = input.nextLine();
+                } else {
+                    allowedInput = true;
+                }
             } catch (NumberFormatException ex) {
-                System.out.println("Некорректный ввод! Введите double:");
+                System.out.println("Некорректный ввод! Введите вещественное число:");
                 userInput = input.nextLine();
             }
         } while (!allowedInput);
@@ -130,10 +163,11 @@ public class Main {
      * @param engineStack Массив с двигателями.
      */
     private static void enginesConfig(ArrayList<Engine> engineStack) {
+
         printConfigMenu();
         int choice = getIntInput();
         switch (choice) {
-            case 1 -> getNewEngineDetails(engineStack);
+            case 1 -> getNewEngineWithDetails(engineStack);
             case 2 -> getNewClearEngine(engineStack);
             case 3 -> System.out.println("Отмена");
             default -> System.out.println("Данного пункта нет в меню!");
@@ -146,6 +180,7 @@ public class Main {
      * @param engineStack Массив с двигателями.
      */
     private static void getNewClearEngine(ArrayList<Engine> engineStack) {
+
         printEnginesMenu();
         int userChoice = getIntInput();
         switch (userChoice) {
@@ -200,7 +235,8 @@ public class Main {
      *
      * @param engineStack Массив с двигателями.
      */
-    private static void getNewEngineDetails(ArrayList<Engine> engineStack) {
+    private static void getNewEngineWithDetails(ArrayList<Engine> engineStack) {
+
         printEnginesMenu();
         int userChoice = getIntInput();
         switch (userChoice) {
@@ -214,13 +250,35 @@ public class Main {
     }
 
     /**
+     * Функция возвращает название двигателя.
+     *
+     * @return Название двигателя.
+     */
+    private static String getEngineName() {
+
+        System.out.println("Введите название двигателя:");
+        return getStringInput();
+    }
+
+    /**
+     * Функция возвращает мощность двигателя в л.с.
+     *
+     * @return Мощность двигателя в л.с.
+     */
+    private static double getEnginePower() {
+
+        System.out.println("Введите мощность двигателя в л.с (от 1.0 до 111000.0:");
+        return getDoubleInputWithParams(1, 111000);
+    }
+
+    /**
      * Функция удаляет объект двигателя из массива по индексу.
      *
      * @param engineStack Массив с двигателями.
      */
     private static void deleteEngine(ArrayList<Engine> engineStack) {
-        printAllEngines(engineStack);
 
+        printAllEngines(engineStack);
         if (!engineStack.isEmpty()) {
             System.out.println("Введите номер двигателя для удаления");
             int numToDelete = getValidIndex(engineStack);
@@ -235,6 +293,7 @@ public class Main {
      * @param engineStack Массив с двигателями.
      */
     private static void printAllEngines(ArrayList<Engine> engineStack) {
+
         int count = 1;
         if (engineStack.isEmpty()) {
             System.out.println("Двигателей нет!");
@@ -252,11 +311,9 @@ public class Main {
      * @return Созданный обычный двигатель.
      */
     private static Engine createNewBasicEngine() {
-        System.out.println("Введите название двигателя:");
-        String engineName = getStringInput();
 
-        System.out.println("Введите мощность двигателя:");
-        double enginePower = getDoubleInput();
+        String engineName = getEngineName();
+        double enginePower = getEnginePower();
 
         return new Engine(engineName, enginePower);
     }
@@ -267,20 +324,18 @@ public class Main {
      * @return Созданный двигатель внутреннего сгорание.
      */
     private static Engine createNewIntCombustionEngine() {
-        System.out.println("Введите название двигателя:");
-        String engineName = getStringInput();
 
-        System.out.println("Введите мощность двигателя:");
-        double enginePower = getDoubleInput();
+        String engineName = getEngineName();
+        double enginePower = getEnginePower();
 
         System.out.println("Введите область использования:");
         String fieldOfUse = getStringInput();
 
-        System.out.println("Введите детонационную стойкость бензина:");
-        int fuelType = getIntInput();
+        System.out.println("Введите детонационную стойкость используемого двигателем бензина (от 80 до 200):");
+        int fuelType = getIntInputWithParams(80, 200);
 
-        System.out.println("Введите часовой расход топлива:");
-        double fuelConsumptionHourly = getDoubleInput();
+        System.out.println("Введите часовой расход топлива двигателя (от 1 до 4000):");
+        double fuelConsumptionHourly = getDoubleInputWithParams(1, 4000);
 
         return new internalCombustionEngine(engineName, enginePower, fieldOfUse, fuelType, fuelConsumptionHourly);
     }
@@ -292,17 +347,14 @@ public class Main {
      */
     private static Engine createNewDieselEngine() {
 
-        System.out.println("Введите название двигателя:");
-        String engineName = getStringInput();
-
-        System.out.println("Введите мощность двигателя:");
-        double enginePower = getDoubleInput();
+        String engineName = getEngineName();
+        double enginePower = getEnginePower();
 
         System.out.println("Введите компанию производителя двигателя:");
         String engineManufacturer = getStringInput();
 
-        System.out.println("Введите объем двигателя в литрах:");
-        double engineDisplacement = getDoubleInput();
+        System.out.println("Введите объем двигателя в литрах (от 1.0 до 2000.0):");
+        double engineDisplacement = getDoubleInputWithParams(1, 2000);
 
         return new dieselEngine(engineName, enginePower, engineManufacturer, engineDisplacement);
     }
@@ -313,23 +365,21 @@ public class Main {
      * @return Созданный реактивный двигатель.
      */
     private static Engine createNewJetEngine() {
-        System.out.println("Введите название двигателя:");
-        String engineName = getStringInput();
 
-        System.out.println("Введите мощность двигателя:");
-        double enginePower = getDoubleInput();
+        String engineName = getEngineName();
+        double enginePower = getEnginePower();
 
         System.out.println("Перечислите на каких самолетах устанавливается данный двигатель:");
         String jetsUse = getStringInput();
 
-        System.out.println("Введите энергоэффективность двигателя:");
-        double energyEfficiency = getDoubleInput();
+        System.out.println("Введите процент энергоэффективности двигателя (от 1.0 до 100.0):");
+        double energyEfficiency = getDoubleInputWithParams(1, 100);
 
-        System.out.println("Введите тяговооружённость двигателя:");
-        double thrustToWeightRatio = getDoubleInput();
+        System.out.println("Введите тяговооружённость двигателя (от 0.0 до 5.0):");
+        double thrustToWeightRatio = getDoubleInputWithParams(0, 5);
 
-        System.out.println("Введите максимальную скорость самолета с данным двигателем:");
-        int maxSpeed = getIntInput();
+        System.out.println("Введите максимальную скорость самолета в км/ч с данным двигателем (от 100 до 1500):");
+        int maxSpeed = getIntInputWithParams(100, 1500);
 
         return new jetEngine(engineName, enginePower, jetsUse, energyEfficiency, thrustToWeightRatio, maxSpeed);
     }
@@ -356,27 +406,29 @@ public class Main {
      * @param engineStack Массив двигателей
      */
     private static void compareEngines(ArrayList<Engine> engineStack) {
+
         printAllEngines(engineStack);
+        if (!engineStack.isEmpty()) {
+            System.out.println("Введите номер первого двигателя для сравнения:");
+            int firstEngineIndex = getValidIndex(engineStack) - 1;
 
-        System.out.println("Введите номер первого двигателя для сравнения:");
-        int firstEngineIndex = getValidIndex(engineStack) - 1;
+            System.out.println("Введите номер второго двигателя для сравнения:");
+            int secondEngineIndex = getValidIndex(engineStack) - 1;
 
-        System.out.println("Введите номер второго двигателя для сравнения:");
-        int secondEngineIndex = getValidIndex(engineStack) - 1;
-
-        if (!(secondEngineIndex == firstEngineIndex)) {
-            if (engineStack.get(firstEngineIndex).hashCode() == engineStack.get(secondEngineIndex).hashCode()) {
-                System.out.println("хэш-коды двух объектов равны!");
-                if (engineStack.get(firstEngineIndex).equals(engineStack.get(secondEngineIndex))) {
-                    System.out.println("Объекты равны, так как хэш-коды и операция равенства двух объектов равны");
+            if (!(secondEngineIndex == firstEngineIndex)) {
+                if (engineStack.get(firstEngineIndex).hashCode() == engineStack.get(secondEngineIndex).hashCode()) {
+                    System.out.println("хэш-коды двух объектов равны!");
+                    if (engineStack.get(firstEngineIndex).equals(engineStack.get(secondEngineIndex))) {
+                        System.out.println("Объекты равны, так как хэш-коды и операция равенства двух объектов равны");
+                    } else {
+                        System.out.println("Объекты не равны, так как операция равенства двух объектов не равна");
+                    }
                 } else {
-                    System.out.println("Объекты не равны, так как операция равенства двух объектов не равна");
+                    System.out.println("Объекты не равны, так как хэш-коды двух объектов не равны");
                 }
             } else {
-                System.out.println("Объекты не равны, так как хэш-коды двух объектов не равны");
+                System.out.println("Нельзя сравнивать одинаковые индексы!");
             }
-        } else {
-            System.out.println("Нельзя сравнивать одинаковые индексы!");
         }
     }
 

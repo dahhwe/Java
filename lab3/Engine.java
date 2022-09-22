@@ -1,7 +1,7 @@
 import java.util.Objects;
 
 /**
- * Базовый класс содержащий информацию о мебельных объектах.
+ * Базовый класс содержащий информацию об объектах.
  */
 public class Engine {
 
@@ -24,8 +24,9 @@ public class Engine {
 
     /**
      * Конструктор с параметрами.
+     *
      * @param engineName Название двигателя.
-     * @param power Мощность двигателя.
+     * @param power      Мощность двигателя.
      */
     Engine(String engineName, Double power) {
         this.engineName = engineName;
@@ -34,6 +35,7 @@ public class Engine {
 
     /**
      * Сравнение объектов
+     *
      * @param o объект для сравнения.
      * @return результат сравнения объектов.
      */
@@ -47,6 +49,7 @@ public class Engine {
 
     /**
      * Возвращает числовое значение фиксированной длины для любого объекта.
+     *
      * @return Числовое значение фиксированной длины для любого объекта.
      */
     @Override
@@ -56,6 +59,7 @@ public class Engine {
 
     /**
      * Вывод информации об объекте.
+     *
      * @return Информация объекта.
      */
     @Override
@@ -65,6 +69,7 @@ public class Engine {
 
     /**
      * Возвращает название двигателя.
+     *
      * @return Название двигателя.
      */
     public String getEngineName() {
@@ -73,6 +78,7 @@ public class Engine {
 
     /**
      * Возвращает мощность двигателя.
+     *
      * @return Мощность двигателя.
      */
     public Double getPower() {

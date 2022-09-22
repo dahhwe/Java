@@ -24,8 +24,9 @@ public class dieselEngine extends Engine {
 
     /**
      * Конструктор с параметрами.
-     * @param engineName Название двигателя.
-     * @param power Мощность двигателя.
+     *
+     * @param engineName         Название двигателя.
+     * @param power              Мощность двигателя.
      * @param engineManufacturer Производитель двигателя.
      * @param engineDisplacement Объем двигателя.
      */
@@ -38,6 +39,7 @@ public class dieselEngine extends Engine {
 
     /**
      * Сравнение объектов
+     *
      * @param o объект для сравнения.
      * @return результат сравнения объектов.
      */
@@ -53,6 +55,7 @@ public class dieselEngine extends Engine {
 
     /**
      * Возвращает числовое значение фиксированной длины для любого объекта.
+     *
      * @return Числовое значение фиксированной длины для любого объекта.
      */
     @Override
@@ -62,13 +65,14 @@ public class dieselEngine extends Engine {
 
     /**
      * Вывод информации об объекте.
+     *
      * @return Информация объекта.
      */
     @Override
     public String toString() {
 
         return " | Название — " + getEngineName() + " | Мощность — " + getPower() + " л.с." +
-                " | Компания производитель — " + engineManufacturer + " | Объем двигателя в литрах — " +
-                engineDisplacement;
+                " | Компания производитель — " + engineManufacturer + " | Объем двигателя — " +
+                engineDisplacement + " литров";
     }
 }
