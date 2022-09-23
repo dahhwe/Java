@@ -17,7 +17,7 @@ public class Engine {
     /**
      * Конструктор по-умолчанию.
      */
-    Engine() {
+    public Engine() {
         engineName = "notSet";
         power = 0.0;
     }
@@ -28,7 +28,7 @@ public class Engine {
      * @param engineName Название двигателя.
      * @param power      Мощность двигателя.
      */
-    Engine(String engineName, Double power) {
+    public Engine(String engineName, Double power) {
         this.engineName = engineName;
         this.power = power;
     }
@@ -58,16 +58,6 @@ public class Engine {
     }
 
     /**
-     * Вывод информации об объекте.
-     *
-     * @return Информация объекта.
-     */
-    @Override
-    public String toString() {
-        return " | Название двигателя — " + engineName + " | Мощность двигателя — " + power + " л.с.";
-    }
-
-    /**
      * Возвращает название двигателя.
      *
      * @return Название двигателя.
@@ -83,5 +73,37 @@ public class Engine {
      */
     public Double getPower() {
         return power;
+    }
+
+    /**
+     * Возвращает значение переменной
+     *
+     * @param engineName значение переменной
+     */
+    public void setEngineName(String engineName) {
+        if (!engineName.isEmpty()) {
+            this.engineName = engineName;
+        }
+    }
+
+    /**
+     * Возвращает значение переменной
+     *
+     * @param power значение переменной
+     */
+    public void setPower(Double power) {
+        if (power != 0.0) {
+            this.power = power;
+        }
+    }
+
+    /**
+     * Вывод информации об объекте.
+     *
+     * @return Информация объекта.
+     */
+    @Override
+    public String toString() {
+        return " | Название двигателя — " + engineName + " | Мощность двигателя — " + power + " л.с.";
     }
 }

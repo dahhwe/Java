@@ -184,49 +184,13 @@ public class Main {
         printEnginesMenu();
         int userChoice = getIntInput();
         switch (userChoice) {
-            case 1 -> engineStack.add(createNewClearBasicEngine());
-            case 2 -> engineStack.add(createNewClearIntCombustionEngine());
-            case 3 -> engineStack.add(createNewClearDieselEngine());
-            case 4 -> engineStack.add(createNewClearJetEngine());
+            case 1 -> engineStack.add(new Engine());
+            case 2 -> engineStack.add(new InternalCombustionEngine());
+            case 3 -> engineStack.add(new DieselEngine());
+            case 4 -> engineStack.add(new JetEngine());
             case 5 -> System.out.println("Отмена");
             default -> System.out.println("Данного пункта нет в меню!");
         }
-    }
-
-    /**
-     * Создание обычного двигателя без параметров.
-     *
-     * @return обычный двигатель без параметров
-     */
-    private static Engine createNewClearBasicEngine() {
-        return new Engine();
-    }
-
-    /**
-     * Создание двигателя внутреннего сгорания без параметров.
-     *
-     * @return двигатель внутреннего сгорания без параметров.
-     */
-    private static Engine createNewClearIntCombustionEngine() {
-        return new internalCombustionEngine();
-    }
-
-    /**
-     * Создание дизельного двигателя внутреннего сгорания без параметров.
-     *
-     * @return дизельный двигатель внутреннего сгорания без параметров.
-     */
-    private static Engine createNewClearDieselEngine() {
-        return new dieselEngine();
-    }
-
-    /**
-     * Создание реактивного двигателя внутреннего сгорания без параметров.
-     *
-     * @return реактивный двигатель внутреннего сгорания без параметров.
-     */
-    private static Engine createNewClearJetEngine() {
-        return new jetEngine();
     }
 
     /**
@@ -280,7 +244,7 @@ public class Main {
 
         printAllEngines(engineStack);
         if (!engineStack.isEmpty()) {
-            System.out.println("Введите номер двигателя для удаления");
+            System.out.println("Введите номер двигателя для удаления:");
             int numToDelete = getValidIndex(engineStack);
             engineStack.remove(numToDelete - 1);
             System.out.println("Двигатель #" + numToDelete + " удален!");
@@ -315,6 +279,7 @@ public class Main {
         String engineName = getEngineName();
         double enginePower = getEnginePower();
 
+        System.out.println("Двигатель создан!");
         return new Engine(engineName, enginePower);
     }
 
@@ -337,7 +302,8 @@ public class Main {
         System.out.println("Введите часовой расход топлива двигателя (от 1 до 4000):");
         double fuelConsumptionHourly = getDoubleInputWithParams(1, 4000);
 
-        return new internalCombustionEngine(engineName, enginePower, fieldOfUse, fuelType, fuelConsumptionHourly);
+        System.out.println("Двигатель создан!");
+        return new InternalCombustionEngine(engineName, enginePower, fieldOfUse, fuelType, fuelConsumptionHourly);
     }
 
     /**
@@ -356,7 +322,8 @@ public class Main {
         System.out.println("Введите объем двигателя в литрах (от 1.0 до 2000.0):");
         double engineDisplacement = getDoubleInputWithParams(1, 2000);
 
-        return new dieselEngine(engineName, enginePower, engineManufacturer, engineDisplacement);
+        System.out.println("Двигатель создан!");
+        return new DieselEngine(engineName, enginePower, engineManufacturer, engineDisplacement);
     }
 
     /**
@@ -381,7 +348,8 @@ public class Main {
         System.out.println("Введите максимальную скорость самолета в км/ч с данным двигателем (от 100 до 1500):");
         int maxSpeed = getIntInputWithParams(100, 1500);
 
-        return new jetEngine(engineName, enginePower, jetsUse, energyEfficiency, thrustToWeightRatio, maxSpeed);
+        System.out.println("Двигатель создан!");
+        return new JetEngine(engineName, enginePower, jetsUse, energyEfficiency, thrustToWeightRatio, maxSpeed);
     }
 
     /**
@@ -416,16 +384,16 @@ public class Main {
             int secondEngineIndex = getValidIndex(engineStack) - 1;
 
             if (!(secondEngineIndex == firstEngineIndex)) {
-                if (engineStack.get(firstEngineIndex).hashCode() == engineStack.get(secondEngineIndex).hashCode()) {
-                    System.out.println("хэш-коды двух объектов равны!");
-                    if (engineStack.get(firstEngineIndex).equals(engineStack.get(secondEngineIndex))) {
-                        System.out.println("Объекты равны, так как хэш-коды и операция равенства двух объектов равны");
-                    } else {
-                        System.out.println("Объекты не равны, так как операция равенства двух объектов не равна");
-                    }
+//                if (engineStack.get(firstEngineIndex).hashCode() == engineStack.get(secondEngineIndex).hashCode()) {
+//                    System.out.println("хэш-коды двух объектов равны!");
+                if (engineStack.get(firstEngineIndex).equals(engineStack.get(secondEngineIndex))) {
+                    System.out.println("Объекты равны, так как хэш-коды и операция равенства двух объектов равны");
                 } else {
-                    System.out.println("Объекты не равны, так как хэш-коды двух объектов не равны");
+                    System.out.println("Объекты не равны, так как операция равенства двух объектов не равна");
                 }
+//                } else {
+//                    System.out.println("Объекты не равны, так как хэш-коды двух объектов не равны");
+//                }
             } else {
                 System.out.println("Нельзя сравнивать одинаковые индексы!");
             }

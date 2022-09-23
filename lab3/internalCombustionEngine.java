@@ -3,7 +3,7 @@ import java.util.Objects;
 /**
  * Производный класс содержащий информацию о мебельных объектах.
  */
-public class internalCombustionEngine extends Engine {
+public class InternalCombustionEngine extends Engine {
 
     /**
      * Область использования.
@@ -21,7 +21,7 @@ public class internalCombustionEngine extends Engine {
     /**
      * Конструктор по-умолчанию.
      */
-    internalCombustionEngine() {
+    public InternalCombustionEngine() {
         fieldOfUse = "notSet";
         fuelType = 0;
         fuelConsumptionHourly = 0.0;
@@ -36,7 +36,7 @@ public class internalCombustionEngine extends Engine {
      * @param fuelType              Детонационная стойкость бензина.
      * @param fuelConsumptionHourly Часовой расход топлива.
      */
-    public internalCombustionEngine(String engineName, Double power,
+    public InternalCombustionEngine(String engineName, Double power,
                                     String fieldOfUse, Integer fuelType, Double fuelConsumptionHourly) {
 
         super(engineName, power);
@@ -53,9 +53,8 @@ public class internalCombustionEngine extends Engine {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        internalCombustionEngine that = (internalCombustionEngine) o;
+        if (!super.equals(o)) return false;
+        InternalCombustionEngine that = (InternalCombustionEngine) o;
         return Objects.equals(fieldOfUse, that.fieldOfUse) &&
                 Objects.equals(fuelType, that.fuelType) &&
                 Objects.equals(fuelConsumptionHourly, that.fuelConsumptionHourly);
@@ -69,6 +68,39 @@ public class internalCombustionEngine extends Engine {
     @Override
     public int hashCode() {
         return Objects.hash(fieldOfUse, fuelType, fuelConsumptionHourly);
+    }
+
+    /**
+     * Возвращает значение переменной
+     *
+     * @param fieldOfUse значение переменной
+     */
+    public void setFieldOfUse(String fieldOfUse) {
+        if (!fieldOfUse.isEmpty()) {
+            this.fieldOfUse = fieldOfUse;
+        }
+    }
+
+    /**
+     * Возвращает значение переменной
+     *
+     * @param fuelType значение переменной
+     */
+    public void setFuelType(Integer fuelType) {
+        if (fuelType != 0) {
+            this.fuelType = fuelType;
+        }
+    }
+
+    /**
+     * Возвращает значение переменной
+     *
+     * @param fuelConsumptionHourly значение переменной
+     */
+    public void setFuelConsumptionHourly(Double fuelConsumptionHourly) {
+        if (fuelConsumptionHourly != 0.0) {
+            this.fuelConsumptionHourly = fuelConsumptionHourly;
+        }
     }
 
     /**

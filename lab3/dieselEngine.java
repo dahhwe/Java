@@ -3,7 +3,7 @@ import java.util.Objects;
 /**
  * Производный класс содержащий информацию о дизельном двигателе.
  */
-public class dieselEngine extends Engine {
+public class DieselEngine extends Engine {
 
     /**
      * Производитель двигателя.
@@ -17,7 +17,7 @@ public class dieselEngine extends Engine {
     /**
      * Конструктор по-умолчанию.
      */
-    dieselEngine() {
+    public DieselEngine() {
         engineManufacturer = "notSet";
         engineDisplacement = 0.0;
     }
@@ -30,7 +30,7 @@ public class dieselEngine extends Engine {
      * @param engineManufacturer Производитель двигателя.
      * @param engineDisplacement Объем двигателя.
      */
-    public dieselEngine(String engineName, Double power, String engineManufacturer, Double engineDisplacement) {
+    public DieselEngine(String engineName, Double power, String engineManufacturer, Double engineDisplacement) {
 
         super(engineName, power);
         this.engineManufacturer = engineManufacturer;
@@ -45,10 +45,8 @@ public class dieselEngine extends Engine {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        dieselEngine that = (dieselEngine) o;
+        DieselEngine that = (DieselEngine) o;
         return Objects.equals(engineManufacturer, that.engineManufacturer) &&
                 Objects.equals(engineDisplacement, that.engineDisplacement);
     }
@@ -61,6 +59,28 @@ public class dieselEngine extends Engine {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), engineManufacturer, engineDisplacement);
+    }
+
+    /**
+     * Возвращает значение переменной
+     *
+     * @param engineManufacturer значение переменной
+     */
+    public void setEngineManufacturer(String engineManufacturer) {
+        if (!engineManufacturer.isEmpty()) {
+            this.engineManufacturer = engineManufacturer;
+        }
+    }
+
+    /**
+     * Возвращает значение переменной
+     *
+     * @param engineDisplacement значение переменной
+     */
+    public void setEngineDisplacement(Double engineDisplacement) {
+        if (engineDisplacement != 0.0) {
+            this.engineDisplacement = engineDisplacement;
+        }
     }
 
     /**
