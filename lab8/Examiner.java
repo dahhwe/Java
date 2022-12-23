@@ -13,7 +13,7 @@ public class Examiner {
     /**
      * Конструктор без параметров.
      */
-    Examiner() {
+    public Examiner() {
     }
 
     /**

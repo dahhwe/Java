@@ -26,9 +26,10 @@ public class Student extends Thread {
     /**
      * Конструктор экземпляра студента.
      */
-    Student(int studentID, Examiner examiner) {
+    public Student(int studentID, Examiner examiner) {
         this.studentID = studentID;
         this.examiner = examiner;
+
     }
 
     /**
@@ -68,6 +69,15 @@ public class Student extends Thread {
         return random.nextInt(max + 1 - min) + min;
     }
 
+    private void getResultsData(Integer result) {
+        if (result == 1) {
+            out.printf("%sЭкзаменатор ставит студенту #%d оценку %d%s\n", GREEN, studentID + 1,
+                    randomInt(3, 5), RESET);
+        } else {
+            out.printf("%sЭкзаменатор выгоняет студента #%d!%s \n", RED, studentID + 1, RESET);
+        }
+    }
+
     /**
      * Процесс сдачи экзамена выполняющийся в потоке исполнения.
      */
@@ -78,49 +88,48 @@ public class Student extends Thread {
         out.printf("Студент #%d сидит за партой и повторяет\n", studentID + 1);
 
         while (!examPassed) {
+            if (!examiner.getExaminerIsFree()) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ignored) {
+                }
+
+                out.printf("Студент #%d готов к сдаче и ожидает преподавателя\n", studentID + 1);
+
+                continue;
+            }
             synchronized (examiner) {
-                if (examiner.getExaminerIsFree()) {
+                examiner.setExaminerIsFree(false);
+                out.printf("%sСтудент #%d подходит к экзаменатору и приступает к сдаче экзамена%s\n", YELLOW,
+                        studentID + 1, RESET);
+                try {
+                    int result = randomInt(1, 3);
+                    Thread.sleep(2000);
+
                     examiner.setExaminerIsFree(false);
-                    out.printf("%sСтудент #%d подходит к экзаменатору и приступает к сдаче экзамена%s\n", YELLOW,
-                            studentID + 1, RESET);
+                    if (result == 3) {
+                        out.printf("%sЭкзаменатор отправляет студента #%d еще раз подумать за парту%s\n", PURPLE,
+                                studentID + 1, RESET);
+                        out.printf("Студент #%d готовится к сдаче экзамена\n", studentID + 1);
 
-                    try {
-                        Thread.sleep(2000);
+                        examiner.setExaminerIsFree(true);
+                        try {
+                            examiner.wait(2000);
+                            examiner.notifyAll();
 
-                        int result = randomInt(1, 3);
-
-                        if (result == 1) {
-                            out.printf("%sЭкзаменатор ставит студенту #%d оценку %d%s\n", GREEN, studentID + 1,
-                                    randomInt(3, 5), RESET);
-                            examPassed = true;
-                            examiner.setExaminerIsFree(true);
-
-                        } else if (result == 2) {
-                            out.printf("%sЭкзаменатор выгоняет студента #%d!%s \n",
-                                    RED, studentID + 1, RESET);
-                            examPassed = true;
-                            examiner.setExaminerIsFree(true);
-
-                        } else if (result == 3) {
-                            out.printf("%sЭкзаменатор отправляет студента #%d еще раз подумать за парту%s\n",
-                                    PURPLE, studentID + 1, RESET);
-
-                            out.printf("Студент #%d готовится к сдаче экзамена\n", studentID + 1);
-
-                            examiner.setExaminerIsFree(true);
-
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException ignored) {
-                            }
+                        } catch (InterruptedException ignored) {
                         }
-                    } catch (InterruptedException ignored) {
-                    }
-                } else {
-                    try {
                         Thread.sleep(2000);
-                    } catch (InterruptedException ignored) {
+                        out.printf("%sСтудент #%d подходит к экзаменатору и приступает к сдаче экзамена%s\n", YELLOW,
+                                studentID + 1, RESET);
+                        getResultsData(randomInt(1, 2));
+
+                    } else {
+                        getResultsData(result);
                     }
+                    examPassed = true;
+                    examiner.setExaminerIsFree(true);
+                } catch (InterruptedException ignored) {
                 }
             }
         }

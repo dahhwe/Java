@@ -15,24 +15,26 @@ public class Exam {
     private final static PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
 
     /**
-     * Список студентов.
-     */
-    ArrayList<Student> students;
-
-    /**
      * Конструктор класса без параметров.
      */
-    Exam() {
+    public Exam() {
     }
 
     /**
+     * Создание необходимых потоков.
+     *
      * @param numOfDesks Количество парт в аудитории.
      * @param examiner   Экзаменатор.
      * @return Список с созданными потоками.
      */
     private ArrayList<Student> createThreads(int numOfDesks, Examiner examiner) {
-        return IntStream.range(0, numOfDesks).mapToObj((x) -> new Student(x, examiner)).
-                collect(Collectors.toCollection(ArrayList<Student>::new));
+
+        ArrayList<Student> studentsThreads = new ArrayList<>();
+        for (int x = 0; x < numOfDesks; x++) {
+            Student student = new Student(x, examiner);
+            studentsThreads.add(student);
+        }
+        return studentsThreads;
     }
 
     /**
@@ -44,9 +46,10 @@ public class Exam {
     public void examStart(int numOfDesks) throws InterruptedException {
 
         Examiner examiner = new Examiner();
-        students = createThreads(numOfDesks, examiner);
 
-        while (!students.isEmpty()) {
+        while (true) {
+            ArrayList<Student> students = createThreads(numOfDesks, examiner);
+
             out.println("""
                     ╭─────────────────────────────────────────────────╮
                     │ Студенты заходят в аудиторию и садятся за парты │
@@ -64,7 +67,7 @@ public class Exam {
                     ╰─────────────────────────────────────────────────────────╯
                     """);
 
-            students = createThreads(numOfDesks, examiner);
+//            students = createThreads(numOfDesks, examiner);
         }
     }
 }
